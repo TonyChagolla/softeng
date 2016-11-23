@@ -81,11 +81,11 @@ namespace Library
         private void Login_Load(object sender, EventArgs e)
         {
             //Testing Connection
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testusers1.txt", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testusers2.txt", true))
             {
                 for (int i = 0; i <= 100; i++)
                 {
-                    for (int j = 0; j <= 6; j++)
+                    for (int j = 0; j <= 7; j++)
                     {
                         if (log("master" + j, "newpassword" + j) == 0)
                         {
