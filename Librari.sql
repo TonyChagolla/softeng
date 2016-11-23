@@ -29,13 +29,13 @@ CREATE TABLE employee
 	e_user VARCHAR(15) NOT NULL,
 	e_password VARCHAR(15) NOT NULL
 );
-INSERT INTO employee  VALUES(100, 'Tony', 'Chagolla', 'Master1', 'newpassword1');
-INSERT INTO employee  VALUES(101, 'Juan', 'Perez', 'Master2', 'newpassword2');
-INSERT INTO employee  VALUES(102, 'Pedro', 'Rodriguez', 'Master3', 'newpassword3');
-INSERT INTO employee  VALUES(103, 'Miguel', 'Hernandez', 'Master4', 'newpassword4');
-INSERT INTO employee  VALUES(104, 'Antonio', 'Hernandez', 'Master5', 'newpassword5');
-INSERT INTO employee  VALUES(105, 'Jose', 'Garcia', 'Master6', 'newpassword6');
-INSERT INTO employee  VALUES(106, 'Carlos', 'Bustos', 'Master7', 'newpassword7');
+INSERT INTO employee  VALUES(100, 'Tony', 'Chagolla', 'Master0', 'newpassword0');
+INSERT INTO employee  VALUES(101, 'Juan', 'Perez', 'Master1', 'newpassword1');
+INSERT INTO employee  VALUES(102, 'Pedro', 'Rodriguez', 'Master2', 'newpassword2');
+INSERT INTO employee  VALUES(103, 'Miguel', 'Hernandez', 'Master3', 'newpassword3');
+INSERT INTO employee  VALUES(104, 'Antonio', 'Hernandez', 'Master4', 'newpassword4');
+INSERT INTO employee  VALUES(105, 'Jose', 'Garcia', 'Master5', 'newpassword5');
+INSERT INTO employee  VALUES(106, 'Carlos', 'Bustos', 'Master6', 'newpassword6');
 
 GO
 

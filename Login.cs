@@ -27,16 +27,20 @@ namespace Library
         {
             if (tryCount >= 3)
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
                 this.Close();
             }
 
             if (tbxUser.Text.Length <= 1) return;
             if (tbxPass.Text.Length <= 1) return;
 
+            log(tbxUser.Text, tbxPass.Text);
+            
+        }
+        private int log(string user, string password)
+        {
             string sqlcmd;
             int count;
-            sqlcmd = "SELECT count(*) AS contador, employee_id FROM employee WHERE e_user = '" + tbxUser.Text + "' AND e_password = '" + tbxPass.Text + "' GROUP BY employee_id";
+            sqlcmd = "SELECT count(*) AS contador, employee_id FROM employee WHERE e_user = '" + user + "' AND e_password = '" + password + "' GROUP BY employee_id";
             SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
             SqlCommand cmd = null;
             SqlDataReader reader = null;
@@ -51,8 +55,8 @@ namespace Library
                 reader.Close();
                 if (count == 1)
                 {
-                    MessageBox.Show("Connection Success");
-                    this.Close();
+                    //MessageBox.Show("Connection Success");
+                    //this.Close();
                 }
                 else
                 {
@@ -72,6 +76,25 @@ namespace Library
             {
                 connection.Close();
             }
+            return 0;
+        }
+        private void Login_Load(object sender, EventArgs e)
+        {
+            //Testing Connection
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testusers1.txt", true))
+            {
+                for (int i = 0; i <= 100; i++)
+                {
+                    for (int j = 0; j <= 6; j++)
+                    {
+                        if (log("master" + j, "newpassword" + j) == 0)
+                        {
+                            file.WriteLine("Connection Success: " + i + "; user: "  + j);
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
