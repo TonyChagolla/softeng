@@ -40,7 +40,7 @@ namespace Library
         {
             string sqlcmd;
             int count;
-            sqlcmd = "SELECT count(*) AS contador, employee_id FROM employee WHERE e_user = '" + user + "' AND e_password = '" + password + "' GROUP BY employee_id";
+            sqlcmd = "SELECT count(*) AS contador FROM employee WHERE e_user = '" + user + "' AND e_password = '" + password + "'";
             SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
             SqlCommand cmd = null;
             SqlDataReader reader = null;
@@ -51,16 +51,21 @@ namespace Library
                 reader = cmd.ExecuteReader();
                 reader.Read();
                 count = (int)reader["contador"];
-                employee_id = (int)reader["employee_id"];
+               
                 reader.Close();
                 if (count == 1)
                 {
-                    //MessageBox.Show("Connection Success");
-                    //this.Close();
+                    sqlcmd = "SELECT employee_id FROM employee WHERE e_user = '" + user + "' AND e_password = '" + password + "'";
+                    cmd = new SqlCommand(sqlcmd, connection);
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    employee_id = (int)reader["employee_id"];
+                    reader.Close();
                 }
                 else
                 {
                     MessageBox.Show("Nombre de usuario o contraseña invalido", "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 1;
                 }
                 tryCount++;
 
@@ -90,6 +95,10 @@ namespace Library
                         if (log("master" + j, "newpassword" + j) == 0)
                         {
                             file.WriteLine("Connection Success: " + i + "; user: "  + j);
+                        }
+                        else
+                        {
+                            file.WriteLine("Success; Password or User not found: " + i + "; user: " + j);
                         }
                     }
                 }
