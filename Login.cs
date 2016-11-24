@@ -61,6 +61,9 @@ namespace Library
                     reader.Read();
                     employee_id = (int)reader["employee_id"];
                     reader.Close();
+                    LibraryForm dlgLibrary = new LibraryForm(employee_id);
+                    dlgLibrary.Show();
+                    this.Hide();
                 }
                 else
                 {
@@ -85,6 +88,7 @@ namespace Library
         }
         private void Login_Load(object sender, EventArgs e)
         {
+            /*
             //Testing Connection
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testusers2.txt", true))
             {
@@ -103,7 +107,7 @@ namespace Library
                     }
                 }
             }
-
+            */
         }
     }
 }
