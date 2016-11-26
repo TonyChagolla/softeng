@@ -48,6 +48,12 @@ CREATE TABLE cliente
 	date_inscription SMALLDATETIME NOT NULL
 );
 INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Mary', 'Arroyo', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Luis', 'Gonzales', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Pablo', 'Ramirez', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Jesus', 'Perez', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Raul', 'Jimenez', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Aaron', 'Juarez', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
+INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('Eduardo', 'Martinez', 'Lazaro Cardenas 120, Salamanca, Gto.', GETDATE());
 GO
 
 
@@ -75,12 +81,20 @@ GO
 
 CREATE TABLE book_borrowed
 (
+	borrow_id INT NOT NULL PRIMARY KEY IDENTITY,
 	book_id INT NOT NULL REFERENCES books(book_id),
 	cliente_id INT NOT NULL REFERENCES cliente(cliente_id),
-	date_ SMALLDATETIME NOT NULL,
+	employee_id INT NOT NULL REFERENCES employee(employee_id),
+	date_b SMALLDATETIME NOT NULL,
+	date_r SMALLDATETIME
 	
 );
-INSERT INTO book_borrowed VALUES(1, 1, GETDATE());
+INSERT INTO book_borrowed (book_id, cliente_id, employee_id, date_b) VALUES(1, 1, 100, GETDATE());
+GO
 
+CREATE VIEW client_books AS
+SELECT b.book_id AS b_id, c.first_name + ' ' + c.last_name AS c_name, b.name AS b_name, bb.date_b AS b_date, bb.date_r as r_date
+FROM book_borrowed bb, books b, cliente c
+WHERE bb.book_id = b.book_id and c.cliente_id = bb.cliente_id
 GO
 
