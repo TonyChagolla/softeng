@@ -35,20 +35,28 @@ namespace Library
             Text = "Library";
             lvBooks.View = View.Details;
             lvBooks.FullRowSelect = true;
-            FillBooks();
+            FillBooks(book_id);
         }
 
         
 
-        public int FillBooks()
+        public int FillBooks(int id_client)
         {
             lvBooks.Clear();
             this.lvBooks.Columns.Add("Cliente", 200, HorizontalAlignment.Left);
             this.lvBooks.Columns.Add("Libro", 180, HorizontalAlignment.Left);
             this.lvBooks.Columns.Add("Fehca Salida", 120, HorizontalAlignment.Left);
             this.lvBooks.Columns.Add("FEcha Retorno", 120, HorizontalAlignment.Left);
-
-            string sqlcmd = "SELECT * FROM client_books";
+            string sqlcmd;
+            if(id_client == -1)
+            {
+                sqlcmd = "SELECT * FROM client_books";
+            }
+            else
+            {
+                sqlcmd = "SELECT * FROM client_books WHERE c_id = '" + id_client + "'" ;
+            }
+            
 
             SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
             SqlCommand cmd = null;
@@ -96,13 +104,30 @@ namespace Library
 
         private void btnSelectClient_Click(object sender, EventArgs e)
         {
-            SelectForm dlgClient = new SelectForm(0, 0);
+            SelectForm dlgClient = new SelectForm(0);
             dlgClient.ShowDialog();
+            if(dlgClient.getClient() != -1)
+            {
+                this.client_id = dlgClient.getClient();
+                MessageBox.Show("" + client_id);
+            }
+            FillBooks(this.client_id);
         }
 
         private void LibraryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnSelecBook_Click(object sender, EventArgs e)
+        {
+            SelectForm dlgBook = new SelectForm(1);
+            dlgBook.ShowDialog();
+           if(dlgBook.getBook() != -1)
+            {
+                this.book_id = dlgBook.getBook();
+                MessageBox.Show("" + book_id);
+            }
         }
     }
 }

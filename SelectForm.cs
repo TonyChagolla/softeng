@@ -13,28 +13,34 @@ namespace Library
 {
     public partial class SelectForm : Form
     {
-        public int client_id;
-        public int book_id;
-        public SelectForm()
+        private int client_id;
+        private int book_id;
+        private int selectMode;
+        private int employee_id;
+        public SelectForm(int selectMode)
         {
             InitializeComponent();
-            book_id = -1;
             client_id = -1;
+            book_id = -1;
+            this.selectMode = selectMode;
         }
-        public SelectForm(int client_id, int book_id)
-        {
-            InitializeComponent();
-            this.book_id = book_id;
-            this.client_id = client_id;
-            FillClient();
-        }
-
-
 
         private void SelectForm_Load(object sender, EventArgs e)
         {
             lvMain.View = View.Details;
             lvMain.FullRowSelect = true;
+            if (selectMode == 0)
+            {
+                FillClient();
+            }
+            else if (selectMode == 1)
+            {
+                FillBook();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private int FillBook()
@@ -137,12 +143,43 @@ namespace Library
 
         private void lvMain_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (selectMode == 0)
+            {
+                if (lvMain.SelectedItems.Count > 0)
+                {
+                    client_id = (int)lvMain.SelectedItems[0].Tag;
+                }
+            }
+            else if (selectMode == 1)
+            {
+                if (lvMain.SelectedItems.Count > 0)
+                {
+                    book_id = (int)lvMain.SelectedItems[0].Tag;
+                }
+            }
             
         }
 
         private void tbxAccept_Click(object sender, EventArgs e)
         {
-           
+            this.Close();
+        }
+
+        public int getClient()
+        {
+            return client_id;
+        }
+
+        public int getBook()
+        {
+            return book_id;
+        }
+
+        private void tbxSelect_Click(object sender, EventArgs e)
+        {
+            client_id = -1;
+            book_id = -1;
+            this.Close();
         }
     }
 }
