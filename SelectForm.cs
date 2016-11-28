@@ -17,6 +17,7 @@ namespace Library
         private int book_id;
         private int selectMode;
         private int employee_id;
+        private int selectedIndex;
         public SelectForm(int selectMode)
         {
             InitializeComponent();
@@ -143,25 +144,22 @@ namespace Library
 
         private void lvMain_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lvMain.SelectedItems.Count > 0)
+            {
+                selectedIndex = (int)lvMain.SelectedItems[0].Tag;
+            }
+        }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
             if (selectMode == 0)
             {
-                if (lvMain.SelectedItems.Count > 0)
-                {
-                    client_id = (int)lvMain.SelectedItems[0].Tag;
-                }
+                client_id = selectedIndex;
             }
             else if (selectMode == 1)
             {
-                if (lvMain.SelectedItems.Count > 0)
-                {
-                    book_id = (int)lvMain.SelectedItems[0].Tag;
-                }
+                    book_id = selectedIndex;
             }
-            
-        }
-
-        private void tbxAccept_Click(object sender, EventArgs e)
-        {
             this.Close();
         }
 
@@ -175,7 +173,7 @@ namespace Library
             return book_id;
         }
 
-        private void tbxSelect_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             client_id = -1;
             book_id = -1;

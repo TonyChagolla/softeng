@@ -110,6 +110,7 @@ namespace Library
             {
                 this.client_id = dlgClient.getClient();
                 MessageBox.Show("" + client_id);
+                getUserName();
             }
             FillBooks(this.client_id);
         }
@@ -121,12 +122,75 @@ namespace Library
 
         private void btnSelecBook_Click(object sender, EventArgs e)
         {
+            if (client_id == -1)
+            {
+                MessageBox.Show("You need to select a client first.", "Library", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             SelectForm dlgBook = new SelectForm(1);
             dlgBook.ShowDialog();
            if(dlgBook.getBook() != -1)
             {
                 this.book_id = dlgBook.getBook();
+                borrowBook();
                 MessageBox.Show("" + book_id);
+            }
+            FillBooks(client_id);
+        }
+
+        private void borrowBook()
+        {
+            DateTime Hoy = DateTime.Now;
+            string sqlcmd = "INSERT INTO book_borrowed (book_id, cliente_id, employee_id, date_b) VALUES (" + book_id + "," + client_id + "," + employee_id + ",'" + Hoy.ToString() + "')";
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+
+            try
+            {
+                lvBooks.Items.Clear();
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                if(cmd.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Error while inserting book","Error");
+                }
+                
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+                this.Text = error.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private void getUserName()
+        {
+            string sqlcmd;
+            sqlcmd = "SELECT * FROM vw_client WHERE cliente_id = " + client_id;
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            try
+            {
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                reader = cmd.ExecuteReader();
+                reader.Read();
+                Text = reader["name"].ToString();
+                reader.Close();
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }

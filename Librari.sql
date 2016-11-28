@@ -98,3 +98,9 @@ FROM book_borrowed bb, books b, cliente c
 WHERE bb.book_id = b.book_id and c.cliente_id = bb.cliente_id
 GO
 
+CREATE VIEW vw_client AS
+SELECT cliente_id, first_name + ' ' + last_name AS name
+FROM cliente
+GO
+
+
