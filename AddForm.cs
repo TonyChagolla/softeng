@@ -42,22 +42,43 @@ namespace Library
                 lbl3.Text = "Paginas";
                 lbl4.Text = "Stock";
             }
+            else
+            {
+                this.Close();
+            }
+
+            test();
         }
 
         private void bntAccept_Click(object sender, EventArgs e)
         {
             DateTime Hoy = DateTime.Now;
+            if(mode == 0)
+                add(tbx1.Text, tbx2.Text, tbx3.Text, Hoy.ToString());
+            else
+                add(tbx1.Text, tbx2.Text, tbx3.Text, tbx4.Text);
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private int add(string value1, string value2, string value3, string value4)
+        {
+            
             string sqlcmd = null;
             if (mode == 0)
             {
-                sqlcmd = "INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('" + tbx1.Text + "', '" + tbx2.Text + "', '" + tbx3.Text + "','" + Hoy.ToString() + "')";
+                sqlcmd = "INSERT INTO cliente (first_name, last_name, client_address, date_inscription) VALUES('" + value1 + "', '" + value2 + "', '" + value3 + "','" + value4 + "')";
             }
             else if (mode == 1)
             {
-                sqlcmd = "INSERT INTO books VALUES('" + tbx1.Text +"','" + tbx2.Text +"','" + tbx3.Text +"','" +tbx4.Text +"')";
+                sqlcmd = "INSERT INTO books VALUES('" + tbx1.Text + "','" + tbx2.Text + "','" + tbx3.Text + "','" + tbx4.Text + "')";
             }
-          
-            
+
+
             SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
             SqlCommand cmd = null;
 
@@ -68,6 +89,7 @@ namespace Library
                 if (cmd.ExecuteNonQuery() != 1)
                 {
                     MessageBox.Show("Error while inserting book", "Error");
+                    return 1;
                 }
 
             }
@@ -75,17 +97,31 @@ namespace Library
             {
                 MessageBox.Show(this, error.Message, "Error");
                 this.Text = error.Message;
+                return 1;
             }
             finally
             {
                 connection.Close();
             }
-            this.Close();
+            return 0;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void test()
         {
-            this.Close();
+            DateTime hoy = DateTime.Now;
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testAddClient.txt", true))
+            {
+                for (int i = 0; i <= 100; i++)
+                {
+                    for (int j = 0; j <= 7; j++)
+                    {
+                        if (add("Nombre" + j, "Apellido" + j, "Direccion" + j, hoy.ToString()) == 0)
+                        {
+                            file.WriteLine("Connection Success: " + i + "; cliente: " + j);
+                        }
+                    }
+                }
+            }
         }
     }
 }

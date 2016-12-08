@@ -112,7 +112,6 @@ namespace Library
             if(dlgClient.getClient() != -1)
             {
                 this.client_id = dlgClient.getClient();
-                MessageBox.Show("" + client_id);
                 getUserName();
             }
             FillBooks(this.client_id);
@@ -136,7 +135,6 @@ namespace Library
             {
                 this.book_id = dlgBook.getBook();
                 borrowBook();
-                MessageBox.Show("" + book_id);
             }
             FillBooks(client_id);
         }
