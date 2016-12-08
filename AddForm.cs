@@ -75,7 +75,7 @@ namespace Library
             }
             else if (mode == 1)
             {
-                sqlcmd = "INSERT INTO books VALUES('" + tbx1.Text + "','" + tbx2.Text + "','" + tbx3.Text + "','" + tbx4.Text + "')";
+                sqlcmd = "INSERT INTO books VALUES('" + value1 + "','" + value2 + "','" + value3 + "','" + value4 + "')";
             }
 
 
@@ -109,13 +109,13 @@ namespace Library
         private void test()
         {
             DateTime hoy = DateTime.Now;
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testAddClient.txt", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testAddBook.txt", true))
             {
                 for (int i = 0; i <= 100; i++)
                 {
                     for (int j = 0; j <= 7; j++)
                     {
-                        if (add("Nombre" + j, "Apellido" + j, "Direccion" + j, hoy.ToString()) == 0)
+                        if (add("Nombre" + j, "Autor" + j, "" + j,  "" + j) == 0)
                         {
                             file.WriteLine("Connection Success: " + i + "; cliente: " + j);
                         }
