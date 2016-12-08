@@ -192,38 +192,8 @@ namespace Library
                 MessageBox.Show("Seleccione un registro", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            string sqlcmd = null;
-            if (selectMode == 0)
-            {
-                sqlcmd = "DELETE FROM cliente WHERE cliente_id = " + selectedIndex;
-            }
-            else if (selectMode == 1)
-            {
-                sqlcmd = "DELETE FROM books WHERE book_id = " + selectedIndex;
-            }
-           
-            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
-            SqlCommand cmd = null;
+            delete(selectedIndex);
 
-            try
-            {
-                connection.Open();
-                cmd = new SqlCommand(sqlcmd, connection);
-                if (cmd.ExecuteNonQuery() != 1)
-                {
-                    MessageBox.Show("Error while deleting", "Error");
-                }
-
-            }
-            catch (SqlException error)
-            {
-                MessageBox.Show(this, error.Message, "Error");
-                this.Text = error.Message;
-            }
-            finally
-            {
-                connection.Close();
-            }
             selectedIndex = -1;
 
             if (selectMode == 0)
@@ -257,6 +227,65 @@ namespace Library
                 this.Close();
             }
 
+        }
+
+        private void Testdelete()
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"../../testDelete.txt", true))
+            {
+                int count = lvMain.Items.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    this.lvMain.Items[i].Focused = true;
+                    this.lvMain.Items[i].Selected = true;
+                    selectedIndex = (int)lvMain.SelectedItems[i].Tag;
+                    if (delete(selectedIndex) == 0)
+                    {
+                        file.WriteLine("Delete Success: " + i + "; Delete Id: " + selectedIndex);
+                    }
+
+                }
+            }
+        }
+
+        private int delete(int selectedIndex)
+        {
+            
+            string sqlcmd = null;
+            if (selectMode == 0)
+            {
+                sqlcmd = "DELETE FROM cliente WHERE cliente_id = " + selectedIndex;
+            }
+            else if (selectMode == 1)
+            {
+                sqlcmd = "DELETE FROM books WHERE book_id = " + selectedIndex;
+            }
+
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+
+            try
+            {
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                if (cmd.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Error while deleting", "Error");
+                    return 1;
+                }
+
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+                this.Text = error.Message;
+                return 1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return 0;
         }
     }
 }

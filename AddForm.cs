@@ -47,7 +47,6 @@ namespace Library
                 this.Close();
             }
 
-            test();
         }
 
         private void bntAccept_Click(object sender, EventArgs e)
