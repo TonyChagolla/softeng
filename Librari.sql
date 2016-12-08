@@ -93,7 +93,7 @@ INSERT INTO book_borrowed (book_id, cliente_id, employee_id, date_b) VALUES(1, 1
 GO
 
 CREATE VIEW client_books AS
-SELECT b.book_id AS b_id, c.first_name + ' ' + c.last_name AS c_name, b.name AS b_name, bb.date_b AS b_date, bb.date_r as r_date, c.cliente_id as c_id
+SELECT bb.borrow_id AS b_id, c.first_name + ' ' + c.last_name AS c_name, b.name AS b_name, bb.date_b AS b_date, bb.date_r as r_date, c.cliente_id as c_id
 FROM book_borrowed bb, books b, cliente c
 WHERE bb.book_id = b.book_id and c.cliente_id = bb.cliente_id
 GO

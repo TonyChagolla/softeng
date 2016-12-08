@@ -16,6 +16,7 @@ namespace Library
         public int employee_id;
         public int book_id;
         public int client_id;
+        public int selectedIndex;
 
         public LibraryForm()
         {
@@ -28,6 +29,7 @@ namespace Library
             this.employee_id = employee_id;
             book_id = -1;
             client_id = -1;
+            selectedIndex = -1;
         }
 
         private void LibraryForm_Load(object sender, EventArgs e)
@@ -192,6 +194,52 @@ namespace Library
             {
                 connection.Close();
             }
+        }
+
+        private void lvBooks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvBooks.SelectedItems.Count > 0)
+            {
+                selectedIndex = (int)lvBooks.SelectedItems[0].Tag;
+            }
+            else { selectedIndex = -1; }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(selectedIndex <= 0)
+            {
+                MessageBox.Show("Seleccione un libro", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            string sqlcmd = "DELETE FROM book_borrowed WHERE borrow_id = " + selectedIndex;
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+
+            try
+            {
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                if (cmd.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Error while deleting book", "Error");
+                }
+
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+                this.Text = error.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            lvBooks.Items.Clear();
+            selectedIndex = -1;
+            FillBooks(client_id);
+
         }
     }
 }
