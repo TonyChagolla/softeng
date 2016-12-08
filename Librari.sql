@@ -82,9 +82,9 @@ GO
 CREATE TABLE book_borrowed
 (
 	borrow_id INT NOT NULL PRIMARY KEY IDENTITY,
-	book_id INT NOT NULL REFERENCES books(book_id),
-	cliente_id INT NOT NULL REFERENCES cliente(cliente_id),
-	employee_id INT NOT NULL REFERENCES employee(employee_id),
+	book_id INT NOT NULL REFERENCES books(book_id) ON DELETE CASCADE,
+	cliente_id INT NOT NULL REFERENCES cliente(cliente_id) ON DELETE CASCADE,
+	employee_id INT NOT NULL REFERENCES employee(employee_id) ON DELETE CASCADE,
 	date_b SMALLDATETIME NOT NULL,
 	date_r SMALLDATETIME
 	

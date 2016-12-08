@@ -179,5 +179,46 @@ namespace Library
             book_id = -1;
             this.Close();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (selectedIndex <= 0)
+            {
+                MessageBox.Show("Seleccione un registro", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            string sqlcmd = null;
+            if (selectMode == 0)
+            {
+                sqlcmd = "DELETE FROM cliente WHERE cliente_id = " + selectedIndex;
+            }
+            else if (selectMode == 1)
+            {
+                sqlcmd = "DELETE FROM books WHERE book_id = " + selectedIndex;
+            }
+           
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+
+            try
+            {
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                if (cmd.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Error while deleting", "Error");
+                }
+
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+                this.Text = error.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
