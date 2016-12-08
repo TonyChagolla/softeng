@@ -224,13 +224,39 @@ namespace Library
             {
                 connection.Close();
             }
+            selectedIndex = -1;
+
+            if (selectMode == 0)
+            {
+                FillClient();
+            }
+            else if (selectMode == 1)
+            {
+                FillBook();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-                AddForm dlgAdd = new AddForm(selectMode);
-                dlgAdd.ShowDialog();
-           
+            AddForm dlgAdd = new AddForm(selectMode);
+            dlgAdd.ShowDialog();
+            if (selectMode == 0)
+            {
+                FillClient();
+            }
+            else if (selectMode == 1)
+            {
+                FillBook();
+            }
+            else
+            {
+                this.Close();
+            }
+
         }
     }
 }

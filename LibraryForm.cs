@@ -242,5 +242,42 @@ namespace Library
             FillBooks(client_id);
 
         }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            DateTime Hoy = DateTime.Now;
+            if (selectedIndex <= 0)
+            {
+                MessageBox.Show("Seleccione un registro", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
+            string sqlcmd = "UPDATE book_borrowed SET date_r = '" + Hoy.ToString() + "' WHERE borrow_id = " + selectedIndex;
+            SqlConnection connection = new SqlConnection(SqlConnect.SqlString());
+            SqlCommand cmd = null;
+
+            try
+            {
+                connection.Open();
+                cmd = new SqlCommand(sqlcmd, connection);
+                if (cmd.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Error while updating", "Error");
+                }
+
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(this, error.Message, "Error");
+                this.Text = error.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            lvBooks.Items.Clear();
+            selectedIndex = -1;
+            FillBooks(client_id);
+        }
     }
 }
