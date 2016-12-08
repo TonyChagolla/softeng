@@ -23,19 +23,19 @@ GO
 
 CREATE TABLE employee
 (
-	employee_id INT NOT NULL PRIMARY KEY,
+	employee_id INT NOT NULL PRIMARY KEY IDENTITY,
 	first_name VARCHAR(15) NOT NULL,
 	last_name VARCHAR(15) NOT NULL,
 	e_user VARCHAR(15) NOT NULL,
 	e_password VARCHAR(15) NOT NULL
 );
-INSERT INTO employee  VALUES(100, 'Tony', 'Chagolla', 'Master0', 'newpassword0');
-INSERT INTO employee  VALUES(101, 'Juan', 'Perez', 'Master1', 'newpassword1');
-INSERT INTO employee  VALUES(102, 'Pedro', 'Rodriguez', 'Master2', 'newpassword2');
-INSERT INTO employee  VALUES(103, 'Miguel', 'Hernandez', 'Master3', 'newpassword3');
-INSERT INTO employee  VALUES(104, 'Antonio', 'Hernandez', 'Master4', 'newpassword4');
-INSERT INTO employee  VALUES(105, 'Jose', 'Garcia', 'Master5', 'newpassword5');
-INSERT INTO employee  VALUES(106, 'Carlos', 'Bustos', 'Master6', 'newpassword6');
+INSERT INTO employee  VALUES('Tony', 'Chagolla', 'Master0', 'newpassword0');
+INSERT INTO employee  VALUES('Juan', 'Perez', 'Master1', 'newpassword1');
+INSERT INTO employee  VALUES('Pedro', 'Rodriguez', 'Master2', 'newpassword2');
+INSERT INTO employee  VALUES('Miguel', 'Hernandez', 'Master3', 'newpassword3');
+INSERT INTO employee  VALUES('Antonio', 'Hernandez', 'Master4', 'newpassword4');
+INSERT INTO employee  VALUES('Jose', 'Garcia', 'Master5', 'newpassword5');
+INSERT INTO employee  VALUES('Carlos', 'Bustos', 'Master6', 'newpassword6');
 
 GO
 
@@ -60,22 +60,22 @@ GO
 
 CREATE TABLE books
 (
-	book_id INT NOT NULL PRIMARY KEY,
+	book_id INT NOT NULL PRIMARY KEY IDENTITY,
 	name VARCHAR(50) NOT NULL,
 	author VARCHAR(50) NOT NULL,
 	pages INT NOT NULL,
 	stock INT NOT NULL
 );
-INSERT INTO books VALUES(1, 'La metamorfosis', 'Franz Kafka', 210, 12);
-INSERT INTO books VALUES(2, 'Fahrenheit 451', 'Ray Bradbury', 210, 12);
-INSERT INTO books VALUES(3, 'Crimen y castigo', 'Fedor Dostoievski', 210, 12);
-INSERT INTO books VALUES(4, '100 años de Soledad', 'Gabriel García Márquez', 210, 12);
-INSERT INTO books VALUES(5, 'Las almas muertas', 'Nicolai Gogol', 210, 12);
-INSERT INTO books VALUES(6, 'La comedia humana', 'Honoré de Balzac', 210, 12);
-INSERT INTO books VALUES(7, 'Trópico de cáncer', 'Henry Miller', 210, 12);
-INSERT INTO books VALUES(8, 'La divina comedia', 'Dante Alighieri', 210, 12);
-INSERT INTO books VALUES(9, 'Un mundo feliz', 'Aldous Huxley', 210, 12);
-INSERT INTO books VALUES(10, 'Frankenstein', 'Mary Shelley', 210, 12);
+INSERT INTO books VALUES('La metamorfosis', 'Franz Kafka', 210, 12);
+INSERT INTO books VALUES('Fahrenheit 451', 'Ray Bradbury', 210, 12);
+INSERT INTO books VALUES('Crimen y castigo', 'Fedor Dostoievski', 210, 12);
+INSERT INTO books VALUES('100 años de Soledad', 'Gabriel García Márquez', 210, 12);
+INSERT INTO books VALUES('Las almas muertas', 'Nicolai Gogol', 210, 12);
+INSERT INTO books VALUES('La comedia humana', 'Honoré de Balzac', 210, 12);
+INSERT INTO books VALUES('Trópico de cáncer', 'Henry Miller', 210, 12);
+INSERT INTO books VALUES('La divina comedia', 'Dante Alighieri', 210, 12);
+INSERT INTO books VALUES('Un mundo feliz', 'Aldous Huxley', 210, 12);
+INSERT INTO books VALUES('Frankenstein', 'Mary Shelley', 210, 12);
 
 GO
 
@@ -89,7 +89,7 @@ CREATE TABLE book_borrowed
 	date_r SMALLDATETIME
 	
 );
-INSERT INTO book_borrowed (book_id, cliente_id, employee_id, date_b) VALUES(1, 1, 100, GETDATE());
+INSERT INTO book_borrowed (book_id, cliente_id, employee_id, date_b) VALUES(1, 1, 1, GETDATE());
 GO
 
 CREATE VIEW client_books AS

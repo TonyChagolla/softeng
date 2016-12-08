@@ -152,6 +152,11 @@ namespace Library
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            if (lvMain.SelectedItems.Count <= 0)
+            {
+                MessageBox.Show("Select an element");
+                return;
+            }
             if (selectMode == 0)
             {
                 client_id = selectedIndex;
@@ -219,6 +224,13 @@ namespace Library
             {
                 connection.Close();
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+                AddForm dlgAdd = new AddForm(selectMode);
+                dlgAdd.ShowDialog();
+           
         }
     }
 }
